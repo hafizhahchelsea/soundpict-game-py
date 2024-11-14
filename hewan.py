@@ -17,6 +17,12 @@ hitam = (0,0,0)
 # inisialisasi font
 font = pygame.font.Font(None, 36)
 
+
+# Memuat gambar background
+background_image = pygame.image.load("background.jpg")
+background_image = pygame.transform.scale(background_image, (lebar_layar, tinggi_layar))  
+
+
 # inisialisasi suara untuk setiap hewan dan list suara dan nama hewan 
 suara_singa = pygame.mixer.Sound("singa.wav")
 suara_gajah = pygame.mixer.Sound("gajah.wav")
@@ -41,6 +47,7 @@ def tampilkan_teks(teks, warna, x, y):
     teks_layar = font.render(teks, True, warna)
     teks_kotak = teks_layar.get_rect(center=(x, y))
     layar.blit(teks_layar, teks_kotak)
+    
 
 # Fungsi untuk menampilkan gambar dengan batas hitam
 def tampilkan_gambar_dengan_batas(gambar, x, y):
@@ -51,6 +58,7 @@ def tampilkan_gambar_dengan_batas(gambar, x, y):
 # Fungsi untuk menampilkan menu utama
 def tampilkan_menu():
     layar.fill(putih)
+    layar.blit(background_image, (0, 0))  # Menampilkan background di layar
     tampilkan_teks("Tebak Hewan", hitam, lebar_layar // 2, 100)
 
     tombol_main = pygame.Rect(lebar_layar // 2 - 75, tinggi_layar // 2 - 25, 150, 50)
@@ -67,6 +75,7 @@ def tampilkan_menu():
 # Fungsi untuk menampilkan layar akhir permainan
 def tampilkan_layar_akhir(skor):
     layar.fill(putih)
+    layar.blit(background_image, (0, 0))  # Menampilkan background pada posisi (0, 0)
     tampilkan_teks(f"Anda benar {skor} dari 3.", hitam, lebar_layar // 2, tinggi_layar // 2)
 
     tombol_retry = pygame.Rect(lebar_layar // 2 - 75, tinggi_layar // 2 + 50, 150, 50)
@@ -128,10 +137,12 @@ while berjalan:
 
         if pertanyaan_tersisa > 0:
             if sedang_memainkan_suara:
+                layar.blit(background_image, (0, 0))  # Menampilkan background di layar
                 tampilkan_teks("Suara Hewan Apakah itu?", hitam, lebar_layar// 2,100)
                 for i in range(3):
                     tampilkan_gambar_dengan_batas(gambar_hewan[hewan_acak[i]], (i + 1) * lebar_layar // 4, tinggi_layar // 2)
             else:
+                layar.blit(background_image, (0, 0))  # Menampilkan background di layar
                 tampilkan_teks("Tekan spasi untuk memainkan suara.", hitam, lebar_layar // 2, 100)
         else:
             tombol_retry = tampilkan_layar_akhir(skor)
